@@ -307,7 +307,7 @@ class _EditModalState extends State<EditModal> {
         });
   }
 
-  File _image;
+  late File _image;
 
   final picker = ImagePicker();
 

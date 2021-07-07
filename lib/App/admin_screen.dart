@@ -20,7 +20,7 @@ class AdminScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(SendInfoScreen.routeName);
+          // Navigator.of(context).pushNamed(SendInfoScreen.routeName);
         },
         child: Icon(Icons.message),
         backgroundColor: Color(0xFFDB3942),

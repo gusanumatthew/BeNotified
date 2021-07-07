@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class MessageItem extends StatelessWidget {
   final int index;
 
-  MessageItem({this.index});
+  MessageItem({required this.index});
 
   @override
   Widget build(BuildContext context) {
