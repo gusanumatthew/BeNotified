@@ -2,34 +2,38 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../../../contents/constants/colors.dart';
-import '../../../contents/constants/styles.dart';
-import '../../../services/authentication_service.dart';
-import '../../admin/class_rep_home_screen%20copy.dart';
-import '../../admin/coordinator_home_screen.dart';
-import '../../student/student_home_screen.dart';
-import '../models/app_user.dart';
-import '../models/enums.dart';
-import '../widgets/app_button.dart';
-import '../widgets/app_text_field.dart';
-import '../widgets/spacing.dart';
-import '../widgets/status_bar.dart';
-import '../widgets/two_colored_text.dart';
-import 'welcome_screen.dart';
+import '../../contents/constants/colors.dart';
+import '../../contents/constants/styles.dart';
+import '../../services/authentication_service.dart';
+import '../shared/models/enums.dart';
+import '../shared/screens/signin_screen.dart';
+import '../shared/widgets/app_button.dart';
+import '../shared/widgets/app_dropdown.dart';
+import '../shared/widgets/app_text_field.dart';
+import '../shared/widgets/spacing.dart';
+import '../shared/widgets/status_bar.dart';
+import '../shared/widgets/two_colored_text.dart';
 
-class SigninScreen extends StatefulWidget {
-  static const routeName = '/signin';
+class CoordinatorSignupScreen extends StatefulWidget {
+  static const routeName = '/coordinator_signup';
+
+  const CoordinatorSignupScreen({Key? key}) : super(key: key);
 
   @override
-  _SigninScreenState createState() => _SigninScreenState();
+  _CoordinatorSignupScreenState createState() =>
+      _CoordinatorSignupScreenState();
 }
 
-class _SigninScreenState extends State<SigninScreen> {
+class _CoordinatorSignupScreenState extends State<CoordinatorSignupScreen> {
   final _formKey = GlobalKey<FormState>();
   final _authService = AuthenticationService();
 
-  String _identificationNumber = '';
+  String _fullName = '';
+  String _employeeNumber = '';
+  Level? _level;
+  Program? _program;
   String _password = '';
+  Role _role = Role.Coordinator;
 
   bool isLoading = false;
 
@@ -37,37 +41,33 @@ class _SigninScreenState extends State<SigninScreen> {
     return value!.isEmpty ? 'Field cannot be empty' : null;
   }
 
-  Future<void> loginUser() async {
+  String? validateNotNull<T>(T? value) {
+    return value == null ? 'Field cannot be empty' : null;
+  }
+
+  Future<void> registerCoordinator() async {
     FocusScope.of(context).unfocus();
 
     if (_formKey.currentState!.validate()) {
       setState(() => isLoading = true);
 
       try {
-        AppUser user = await _authService.login(
-          identificationNumber: _identificationNumber,
+        await _authService.register(
+          fullName: _fullName,
+          identificationNumber: _employeeNumber,
+          level: _level!,
+          program: _program!,
+          role: _role,
           password: _password,
         );
 
-        if (user.role == Role.Student) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            StudentHomeScreen.routeName,
-            (route) => false,
-          );
-        } else if (user.role == Role.ClassRep) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            ClassRepHomeScreen.routeName,
-            (route) => false,
-          );
-        } else {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            CoordinatorHomeScreen.routeName,
-            (route) => false,
-          );
-        }
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          CoordinatorSignupScreen.routeName,
+          (route) => false,
+        );
       } on FirebaseAuthException catch (ex) {
         final exceptionString =
-            ex.message?.replaceAll('email address', 'Identification no');
+            ex.message?.replaceAll('email address', 'matric no');
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(exceptionString!)),
@@ -89,13 +89,12 @@ class _SigninScreenState extends State<SigninScreen> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24.0),
             child: Form(
               key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
+                children: [
                   Hero(
                     tag: "logo",
                     child: TwoColoredText(
@@ -107,15 +106,38 @@ class _SigninScreenState extends State<SigninScreen> {
                   Spacing.largeHeight(),
                   Spacing.largeHeight(),
                   Text(
-                    'Sign in',
+                    'Sign up as Coordinator',
                     style: AppStyles.subtitleText,
                   ),
                   Spacing.largeHeight(),
                   AppTextField(
-                    labelText: 'Matric Number/Employee Number',
-                    onChanged: (String value) => _identificationNumber = value,
+                    labelText: 'Full Name',
+                    onChanged: (String value) => _fullName = value,
+                    textInputAction: TextInputAction.next,
+                    validator: validateNotEmpty,
+                  ),
+                  Spacing.bigHeight(),
+                  AppTextField(
+                    labelText: 'Employee Number',
+                    onChanged: (String value) => _employeeNumber = value,
                     keyboardType: TextInputType.number,
                     validator: validateNotEmpty,
+                  ),
+                  Spacing.bigHeight(),
+                  AppDropdown<Level>(
+                    hintText: 'What level do you coordinate?',
+                    items: Level.values,
+                    value: _level,
+                    onChanged: (Level? value) => _level = value,
+                    validator: validateNotNull,
+                  ),
+                  Spacing.bigHeight(),
+                  AppDropdown<Program>(
+                    hintText: 'What program do you coordinate?',
+                    items: Program.values,
+                    value: _program,
+                    onChanged: (Program? value) => _program = value,
+                    validator: validateNotNull,
                   ),
                   Spacing.bigHeight(),
                   AppTextField(
@@ -126,23 +148,23 @@ class _SigninScreenState extends State<SigninScreen> {
                   ),
                   Spacing.largeHeight(),
                   AppButton(
-                    label: 'Sign in',
+                    label: 'Sign up',
                     isLoading: isLoading,
-                    onPressed: loginUser,
+                    onPressed: registerCoordinator,
                   ),
                   Spacing.bigHeight(),
                   Text.rich(
                     TextSpan(
-                      text: 'Don\'t Have an account? ',
+                      text: 'Have an account? ',
                       children: [
                         TextSpan(
-                          text: 'Sign up',
+                          text: 'Sign in',
                           style: TextStyle(color: AppColors.primaryColor),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.pushReplacementNamed(
                                 context,
-                                WelcomeScreen.routeName,
+                                SigninScreen.routeName,
                               );
                             },
                         ),

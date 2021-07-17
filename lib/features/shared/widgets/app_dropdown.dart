@@ -9,18 +9,21 @@ class AppDropdown<T> extends StatelessWidget {
     this.value,
     required this.hintText,
     this.onChanged,
+    this.validator,
   }) : super(key: key);
 
   final List<T> items;
   final T? value;
-  final Function(T?)? onChanged;
+  final void Function(T?)? onChanged;
   final String hintText;
+  final String? Function(T?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
       onChanged: onChanged,
       value: value,
+      validator: validator,
       items: items
           .map(
             (level) => DropdownMenuItem<T>(
@@ -38,6 +41,14 @@ class AppDropdown<T> extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black54),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red.shade900),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red.shade900),
           borderRadius: BorderRadius.circular(8),
         ),
       ),

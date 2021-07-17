@@ -5,8 +5,8 @@ import '../widgets/app_button.dart';
 import '../widgets/spacing.dart';
 import '../widgets/status_bar.dart';
 import '../widgets/two_colored_text.dart';
-import 'coordinator_signup_screen.dart';
-import 'student_signup_screen.dart';
+import '../../admin/coordinator_signup_screen.dart';
+import '../../student/student_signup_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const routeName = '/welcome';
