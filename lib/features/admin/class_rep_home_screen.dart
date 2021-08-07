@@ -1,8 +1,10 @@
+import 'package:be_notified/features/shared/models/app_user.dart';
 import 'package:flutter/material.dart';
 
 import '../../contents/constants/colors.dart';
 import '../shared/screens/notification_screen.dart';
 import '../shared/screens/profile_screen.dart';
+import 'send_notice_screen.dart';
 
 class ClassRepHomeScreen extends StatefulWidget {
   static const routeName = '/class_rep_home';
@@ -14,17 +16,17 @@ class ClassRepHomeScreen extends StatefulWidget {
 class _ClassRepHomeScreenState extends State<ClassRepHomeScreen> {
   int _selectedIndex = 0;
 
-  final _pages = <Widget>[
-    NotificationScreen(),
-    ProfileScreen(),
-  ];
-
   void _onPageChanged(int index) => setState(() => _selectedIndex = index);
 
   @override
   Widget build(BuildContext context) {
+    final user = ModalRoute.of(context)?.settings.arguments as AppUser;
+
     return Scaffold(
-      body: _pages.elementAt(_selectedIndex),
+      body: [
+        NotificationScreen(user: user),
+        ProfileScreen(user: user),
+      ].elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
@@ -45,7 +47,11 @@ class _ClassRepHomeScreenState extends State<ClassRepHomeScreen> {
         onTap: _onPageChanged,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => Navigator.pushNamed(
+          context,
+          SendNoticeScreen.routeName,
+          arguments: user,
+        ),
         child: Icon(Icons.message),
       ),
     );

@@ -1,19 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../contents/constants/styles.dart';
-import '../../../model/message.dart';
+import '../models/notice.dart';
 import 'spacing.dart';
 
 class NotificationItem extends StatelessWidget {
-  final int index;
+  final Notice notice;
 
-  NotificationItem({required this.index});
+  NotificationItem({required this.notice});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
       child: Material(
         color: Colors.white,
         elevation: 5.0,
@@ -27,11 +28,11 @@ class NotificationItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    messageList[index].title,
+                    notice.title,
                     style: AppStyles.titleText,
                   ),
                   Spacing.mediumHeight(),
-                  Text(messageList[index].desc),
+                  Text(notice.description),
                   Spacing.mediumHeight(),
                   Row(
                     children: [
@@ -42,7 +43,7 @@ class NotificationItem extends StatelessWidget {
                             color: Colors.black54,
                           ),
                           SizedBox(width: 8),
-                          Text(messageList[index].time),
+                          Text(notice.deadlineTime.format(context)),
                         ],
                       ),
                       SizedBox(width: 16),
@@ -53,7 +54,9 @@ class NotificationItem extends StatelessWidget {
                             color: Colors.black54,
                           ),
                           SizedBox(width: 8),
-                          Text(messageList[index].date),
+                          Text(DateFormat()
+                              .add_yMEd()
+                              .format(notice.deadlineDate)),
                         ],
                       ),
                     ],

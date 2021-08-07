@@ -1,3 +1,6 @@
+import 'package:be_notified/features/shared/models/app_user.dart';
+import 'package:be_notified/features/shared/models/enums.dart';
+import 'package:be_notified/services/user_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../contents/constants/colors.dart';
@@ -10,7 +13,11 @@ import 'edit_profile_screen.dart';
 import 'welcome_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
+  final AppUser user;
+
   static const routeName = '/profile';
+
+  const ProfileScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -18,6 +25,28 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final _authService = AuthenticationService();
+
+  @override
+  void initState() {
+    updateUser();
+    super.initState();
+  }
+
+  late AppUser user;
+
+  void updateUser() async {
+    user = widget.user;
+  }
+
+  Future<void> editProfile(String name, Level level, Program program) async {
+    user = await UserService().updateUserWithId(
+      widget.user.id,
+      fullName: name,
+      level: level.index,
+      program: program.index,
+    );
+    setState(() {});
+  }
 
   void _editProfileBottomSheet(context) {
     showModalBottomSheet(
@@ -29,7 +58,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       isScrollControlled: true,
-      builder: (BuildContext context) => EditProfileScreen(),
+      builder: (BuildContext context) => EditProfileScreen(
+        user: user,
+        editProfile: editProfile,
+      ),
     );
   }
 
@@ -62,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Spacing.largeHeight(),
             CircleAvatar(
               child: Text(
-                'T',
+                user.fullName[0],
                 style: AppStyles.headlineText,
               ),
               backgroundColor: Colors.blueGrey.shade100,
@@ -70,11 +102,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Spacing.bigHeight(),
             Text(
-              'Gusanu Matthew',
+              user.fullName,
               style: AppStyles.titleText,
             ),
             Spacing.smallHeight(),
-            Text('219378213'),
+            Text(user.identificationNumber),
             Spacing.largeHeight(),
             ProfileTile(
               leading: Icons.person_outline,

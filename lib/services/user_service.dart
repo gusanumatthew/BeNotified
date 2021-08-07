@@ -13,7 +13,7 @@ class UserService {
 
   Future<AppUser> getUserWithId(String userId) async {
     final snapshot = await userCollection.doc(userId).get();
-    return AppUser.fromMap(snapshot.data()!);
+    return AppUser.fromMap(snapshot);
   }
 
   Future<void> createUserWithId(
@@ -34,5 +34,20 @@ class UserService {
       'role': role,
       'timestamp': Timestamp.now(),
     });
+  }
+
+  Future<AppUser> updateUserWithId(
+    String userId, {
+    required String fullName,
+    required int level,
+    required int program,
+  }) async {
+    await userCollection.doc(userId).update({
+      'fullName': fullName,
+      'level': level,
+      'program': program,
+    });
+
+    return getUserWithId(userId);
   }
 }

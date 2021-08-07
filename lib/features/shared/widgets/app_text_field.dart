@@ -5,20 +5,32 @@ import '../../../contents/constants/colors.dart';
 class AppTextField extends StatefulWidget {
   AppTextField({
     Key? key,
-    required this.labelText,
+    this.labelText,
     this.onChanged,
     this.keyboardType,
     this.textInputAction,
     this.validator,
+    this.controller,
+    this.maxLines,
+    this.prefixIcon,
+    this.hintText,
+    this.enabled,
+    this.initialValue,
     this.obscureText = false,
   }) : super(key: key);
 
-  final String labelText;
+  final String? labelText;
   final Function(String)? onChanged;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final String? Function(String?)? validator;
   final bool obscureText;
+  final TextEditingController? controller;
+  final int? maxLines;
+  final Widget? prefixIcon;
+  final String? hintText;
+  final bool? enabled;
+  final String? initialValue;
 
   @override
   _AppTextFieldState createState() => _AppTextFieldState();
@@ -41,11 +53,21 @@ class _AppTextFieldState extends State<AppTextField> {
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       onChanged: widget.onChanged,
+      initialValue: widget.initialValue,
+      maxLines: widget.maxLines,
       validator: widget.validator,
+      controller: widget.controller,
+      enabled: widget.enabled,
       decoration: InputDecoration(
+        alignLabelWithHint: true,
         labelText: widget.labelText,
+        hintText: widget.hintText,
+        prefixIcon: widget.prefixIcon,
         labelStyle: TextStyle(
           color: focusNode.hasFocus ? AppColors.primaryColor : null,
+        ),
+        hintStyle: TextStyle(
+          color: Theme.of(context).textTheme.bodyText2?.color,
         ),
         contentPadding: const EdgeInsets.all(16),
         focusedBorder: OutlineInputBorder(
@@ -53,6 +75,10 @@ class _AppTextFieldState extends State<AppTextField> {
           borderRadius: BorderRadius.circular(8),
         ),
         enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.black54),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black54),
           borderRadius: BorderRadius.circular(8),
         ),
