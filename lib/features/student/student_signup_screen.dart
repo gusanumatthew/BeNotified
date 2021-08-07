@@ -1,3 +1,4 @@
+import 'package:be_notified/features/shared/models/app_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
       setState(() => isLoading = true);
 
       try {
-        await _authService.register(
+        AppUser user = await _authService.register(
           fullName: _fullName,
           identificationNumber: _matricNumber,
           level: _level!,
@@ -62,6 +63,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
         Navigator.of(context).pushNamedAndRemoveUntil(
           StudentHomeScreen.routeName,
           (route) => false,
+          arguments: user,
         );
       } on FirebaseAuthException catch (ex) {
         final exceptionString =

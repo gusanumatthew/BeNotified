@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../contents/constants/colors.dart';
 import '../../../contents/constants/styles.dart';
 import '../../../services/authentication_service.dart';
-import '../../admin/class_rep_home_screen%20copy.dart';
+import '../../admin/class_rep_home_screen.dart';
 import '../../admin/coordinator_home_screen.dart';
 import '../../student/student_home_screen.dart';
 import '../models/app_user.dart';
@@ -53,16 +53,19 @@ class _SigninScreenState extends State<SigninScreen> {
           Navigator.of(context).pushNamedAndRemoveUntil(
             StudentHomeScreen.routeName,
             (route) => false,
+            arguments: user,
           );
         } else if (user.role == Role.ClassRep) {
           Navigator.of(context).pushNamedAndRemoveUntil(
             ClassRepHomeScreen.routeName,
             (route) => false,
+            arguments: user,
           );
         } else {
           Navigator.of(context).pushNamedAndRemoveUntil(
             CoordinatorHomeScreen.routeName,
             (route) => false,
+            arguments: user,
           );
         }
       } on FirebaseAuthException catch (ex) {
@@ -71,6 +74,10 @@ class _SigninScreenState extends State<SigninScreen> {
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(exceptionString!)),
+        );
+      } catch (ex) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(ex.toString())),
         );
       }
 
