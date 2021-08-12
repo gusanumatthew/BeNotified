@@ -54,7 +54,7 @@ class _AppTextFieldState extends State<AppTextField> {
       textInputAction: widget.textInputAction,
       onChanged: widget.onChanged,
       initialValue: widget.initialValue,
-      maxLines: widget.maxLines,
+      maxLines: widget.maxLines ?? 1,
       validator: widget.validator,
       controller: widget.controller,
       enabled: widget.enabled,
