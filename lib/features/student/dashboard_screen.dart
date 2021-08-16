@@ -37,8 +37,45 @@ class DashboardScreen extends StatelessWidget {
               ),
               Spacing.smallHeight(),
               Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+                "\tThe Faculty of Science is a dynamic Faculty where new knowledge, leading scientists and technologist are developed through innovation.The Faculty creates,applies and disseminates new knowledge for the advancement of pure and applied sciences.The faculty of science has 8 departments govern by 8 different HOD(Head Of Departments) under the Supervision of a DEAN the head of Faculy.\nThe Departments under the faculty of Science includes:",
                 textAlign: TextAlign.justify,
+              ),
+              Spacing.smallHeight(),
+              Column(
+                children: [
+                  new ListTile(
+                    leading: Icon(Icons.fiber_manual_record),
+                    title: new Text('Computer Science'),
+                  ),
+                    new ListTile(
+                    leading: Icon(Icons.fiber_manual_record),
+                    title: new Text('Science Laboratory Technology'),
+                  ),
+                    new ListTile(
+                    leading: Icon(Icons.fiber_manual_record),
+                    title: new Text('Statistics'),
+                  ),
+                    new ListTile(
+                    leading: Icon(Icons.fiber_manual_record),
+                    title: new Text('Geology'),
+                  ),
+                    new ListTile(
+                    leading: Icon(Icons.fiber_manual_record),
+                    title: new Text('Biochemistry'),
+                  ),  new ListTile(
+                    leading: Icon(Icons.fiber_manual_record),
+                    title: new Text('Physics with Electronics'),
+                  ),
+                    new ListTile(
+                    leading: Icon(Icons.fiber_manual_record),
+                    title: new Text('Applied Chemistry'),
+                  ),
+                    new ListTile(
+                    leading: Icon(Icons.fiber_manual_record),
+                    title: new Text('Biology and Microbiology'),
+                  ),
+
+                ],
               ),
               Spacing.bigHeight(),
               Text(
@@ -47,7 +84,7 @@ class DashboardScreen extends StatelessWidget {
               ),
               Spacing.smallHeight(),
               Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+                "The Computer Science Department is an accredicted department under the faculty of science aimed at developing computer scientist with the full background knowledge of science and technology,with skilled programming and designing innovations.",
                 textAlign: TextAlign.justify,
               ),
             ],
