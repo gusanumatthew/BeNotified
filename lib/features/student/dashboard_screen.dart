@@ -1,3 +1,4 @@
+import 'package:be_notified/features/shared/widgets/bullet.dart';
 import 'package:flutter/material.dart';
 
 import '../../contents/constants/styles.dart';
@@ -37,46 +38,34 @@ class DashboardScreen extends StatelessWidget {
               ),
               Spacing.smallHeight(),
               Text(
-                "\tThe Faculty of Science is a dynamic Faculty where new knowledge, leading scientists and technologist are developed through innovation.The Faculty creates,applies and disseminates new knowledge for the advancement of pure and applied sciences.The faculty of science has 8 departments govern by 8 different HOD(Head Of Departments) under the Supervision of a DEAN the head of Faculy.\nThe Departments under the faculty of Science includes:",
+                "\tThe Faculty of Science is a dynamic Faculty where new knowledge, leading scientists and technologist are developed through innovation.The Faculty creates,applies and disseminates new knowledge for the advancement of pure and applied sciences.The faculty of science has 8 departments govern by 8 different HOD(Head Of Departments) under the Supervision of a DEAN the head of Faculty.\nThe Departments under the faculty of Science includes:",
                 textAlign: TextAlign.justify,
               ),
               Spacing.smallHeight(),
-              Column(
-                children: [
-                  new ListTile(
-                    leading: Icon(Icons.fiber_manual_record),
-                    title: new Text('Computer Science'),
-                  ),
-                    new ListTile(
-                    leading: Icon(Icons.fiber_manual_record),
-                    title: new Text('Science Laboratory Technology'),
-                  ),
-                    new ListTile(
-                    leading: Icon(Icons.fiber_manual_record),
-                    title: new Text('Statistics'),
-                  ),
-                    new ListTile(
-                    leading: Icon(Icons.fiber_manual_record),
-                    title: new Text('Geology'),
-                  ),
-                    new ListTile(
-                    leading: Icon(Icons.fiber_manual_record),
-                    title: new Text('Biochemistry'),
-                  ),  new ListTile(
-                    leading: Icon(Icons.fiber_manual_record),
-                    title: new Text('Physics with Electronics'),
-                  ),
-                    new ListTile(
-                    leading: Icon(Icons.fiber_manual_record),
-                    title: new Text('Applied Chemistry'),
-                  ),
-                    new ListTile(
-                    leading: Icon(Icons.fiber_manual_record),
-                    title: new Text('Biology and Microbiology'),
-                  ),
-
-                ],
-              ),
+              Bullet(
+                leading: Icons.fiber_manual_record, 
+                title: 'Computer Science' ),
+                 Bullet(
+                leading: Icons.fiber_manual_record, 
+                title: 'Science Laboratory Technology' ),
+                 Bullet(
+                leading: Icons.fiber_manual_record, 
+                title: 'Statistics' ),
+                 Bullet(
+                leading: Icons.fiber_manual_record, 
+                title: 'Geology' ),
+                 Bullet(
+                leading: Icons.fiber_manual_record, 
+                title: 'Biochemistry' ),
+                 Bullet(
+                leading: Icons.fiber_manual_record, 
+                title: 'Physics with Electronics' ),
+                 Bullet(
+                leading: Icons.fiber_manual_record, 
+                title: 'Applied Chemistry' ),
+                 Bullet(
+                leading: Icons.fiber_manual_record, 
+                title: 'Biology and Microbiology' ),
               Spacing.bigHeight(),
               Text(
                 'DEPARTMENT OF COMPUTER-SCIENCE',

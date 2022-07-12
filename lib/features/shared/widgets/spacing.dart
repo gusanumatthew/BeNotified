@@ -17,6 +17,10 @@ class Spacing extends StatelessWidget {
   const Spacing.mediumHeight() : this.height(16);
   const Spacing.bigHeight() : this.height(24);
   const Spacing.largeHeight() : this.height(32);
+  const Spacing.smallWidth() : this.width(8);
+  const Spacing.mediumWidth() : this.width(16);
+  const Spacing.bigWidth() : this.width(24);
+  const Spacing.largeWidth() : this.width(32);
 
   @override
   Widget build(BuildContext context) {
