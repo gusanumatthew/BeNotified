@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
-
 import 'contents/constants/colors.dart';
 import 'contents/constants/strings.dart';
 import 'features/admin/class_rep_home_screen.dart';
@@ -39,10 +38,11 @@ class MyApp extends StatelessWidget {
         primaryColor: AppColors.primaryColor,
         primaryColorDark: AppColors.primaryColorDark,
         scaffoldBackgroundColor: AppColors.backgroundColor,
-        accentColor: AppColors.primaryColor,
         appBarTheme: AppBarTheme(
-          brightness: Brightness.dark,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(secondary: AppColors.primaryColor),
       ),
       initialRoute: StartupScreen.routeName,
       routes: {
